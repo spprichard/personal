@@ -55,6 +55,16 @@ kube-scheduler-mac-mini-1                  1/1     Running             0        
 ## Deploying Kubernetes Dashboard
 - `kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml`
 
+## Generating Token
+- `kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep k8s-admin | awk '{print $1}')`
+
+## Installing SoreageOS
+```
+helm install storageos/storageos --name=storageos --namespace=storageos --set cluster.join="mac-mini-1,mac-mini-2"
+ClusterIP=$(kubectl get svc/storageos --namespace storageos -o custom-columns=IP:spec.clusterIP --no-headers=true)
+ApiAddress=$(echo -n "tcp://$ClusterIP:5705" | base64)
+kubectl patch secret/storageos-api --namespace storageos --patch "{\"data\": {\"apiAddress\": \"$ApiAddress\"}}"
+```
 
 ## Additional Resources
 - https://medium.com/better-programming/build-your-own-multi-node-kubernetes-cluster-with-monitoring-346a7e2ef6e2
