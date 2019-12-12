@@ -52,6 +52,9 @@ kube-scheduler-mac-mini-1                  1/1     Running             0        
 
 10. Profit!
 
+## Deploying Kubernetes Dashboard
+- `kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml`
+
 
 ## Additional Resources
 - https://medium.com/better-programming/build-your-own-multi-node-kubernetes-cluster-with-monitoring-346a7e2ef6e2
